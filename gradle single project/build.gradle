@@ -1,0 +1,57 @@
+buildscript {
+    ext {
+        log4j_version = '4.13.1'
+    }
+}
+
+plugins {
+    // id 'java'
+    id 'application'   // tämä on sama kuin java, mutta lisää run taskin
+    id 'org.flywaydb.flyway' version '6.4.4' // community plugineille pitää antaa aina versio
+    id 'com.adarshr.test-logger' version '4.0.0'
+}
+// apply plugin: 'java'  // sama kuin edellä
+
+application {
+    mainClass.set('HelloWorld')
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'junit', name: 'junit', version: "$log4j_version"
+    testImplementation 'junit:junit:4.13.1'
+}
+
+//test {
+//    testLogging {
+//        events "passed", "skipped", "failed"
+//   }
+//}
+
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+task 'eka' {
+    doFirst {
+        println 'Aloitetaan eka'
+    }
+
+    doLast {
+        println 'Lopetetaan eka'
+    }
+}
+
+task 'toka' {
+
+    dependsOn 'eka'
+
+    doLast {
+        println 'lopetetaan toka'
+    }
+}
